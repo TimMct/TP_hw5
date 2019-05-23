@@ -99,7 +99,7 @@ public class App {
 			
 			double percent = lessThen5Min / allDurations;//procentul celor care au durata mai mica de 5 min
 
-			monitoredData.stream().filter( m -> m.getActivity().equals(act) && percent >= 0.9).forEach(System.out::println);
+			monitoredData.stream().filter( m -> m.getActivity().equals(act) && percent >= 0.9).map( m -> m.getActivity() ).distinct().forEach(System.out::println);
 			//doar cele care au cel putin 90% dintre activitati cu durata mai mica de 5 min
 		}
     }
