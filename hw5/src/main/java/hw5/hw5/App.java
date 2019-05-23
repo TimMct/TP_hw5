@@ -16,6 +16,24 @@ import static java.util.stream.Collectors.toList;
 
 public class App {
     
+	
+	public static String secToTime(long time) {
+		
+		long hours = 0, mins = 0, sec = 0;
+		hours = time / 3600;
+		if(time >= hours * 3600)
+			time -= hours * 3600;
+		
+		mins = time / 60;
+		if(time >= mins * 60)
+			time -= mins * 60;
+		
+		sec = time;
+		return hours+" h  "+mins+" min  "+sec+" sec";
+	}
+	
+	
+	
 	@SuppressWarnings("deprecation")
 	public static void main( String[] args ){
 
@@ -34,6 +52,9 @@ public class App {
 			return new MonitoredData(sdf.parse(threeStrings[0]), sdf.parse(threeStrings[1]), threeStrings[2]);
 		} catch (ParseException e) {}
 		return null;}).collect(toList());
+		
+		
+		
 		
 		
 		//2
@@ -72,7 +93,7 @@ public class App {
 		
 		
 		//5
-		monitoredData.stream().forEach( m -> System.out.println(m.getActivity()+"	duration	"+m.computeTime()));
+		monitoredData.stream().forEach( m -> System.out.println(m.getActivity()+"	duration	"+App.secToTime(m.computeTime())));
 		System.out.println();
 		System.out.println();
 		System.out.println("_________________________________________________________________________________________________________________");
@@ -84,7 +105,7 @@ public class App {
 		List<String> activities = monitoredData.stream().map( m -> m.getActivity()).distinct().collect(toList());
 		for(String act: activities) {
 			long totalTime = monitoredData.stream().filter( m -> m.getActivity().equals(act) ).map( m -> m.computeTime()).reduce(0L, Long::sum);
-			System.out.println(act + "		total duration		" + totalTime);
+			System.out.println(act + "		total duration		" + App.secToTime(totalTime));
 		}
 		System.out.println();
 		System.out.println();
